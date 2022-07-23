@@ -11,7 +11,7 @@ export default function TextField({ size = 'md', placeholder = '' }: props) {
     <input
       type='text'
       placeholder={placeholder}
-      class={`input input-bordered input-${size} w-full max-w-xs`}
+      className={`input input-bordered input-${size} w-full max-w-xs`}
     />
   );
 }
