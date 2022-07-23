@@ -1,10 +1,12 @@
 import React from 'react';
 
-/**
- * size:'xs | 'sm' | 'md' | 'lg'
- */
-export default function TextField({ size = 'md', placeholder = '' }) {
-  console.log(size);
+type props = {
+  size: 'xs' | 'sm' | 'md' | 'lg';
+  placeholder: string;
+}
+
+
+export default function TextField({ size = 'md', placeholder = '' }: props) {
   return (
     <input
       type='text'
