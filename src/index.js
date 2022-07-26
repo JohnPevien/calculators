@@ -1,13 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MainLayout from './components/MainLayout';
+
 import './index.css';
 import App from './App';
+
+import ShippingCalculator from './routes/ShippingCalculator';
+
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <MainLayout>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<App />} />
+          <Route path='/shipping-calculator' element={<ShippingCalculator />} />
+        </Routes>
+      </BrowserRouter>
+    </MainLayout>
   </React.StrictMode>
 );
 
