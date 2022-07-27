@@ -13,14 +13,14 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <MainLayout>
-      <BrowserRouter>
+    <BrowserRouter>
+      <MainLayout>
         <Routes>
           <Route path='/' element={<App />} />
           <Route path='/shipping-calculator' element={<ShippingCalculator />} />
         </Routes>
-      </BrowserRouter>
-    </MainLayout>
+      </MainLayout>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
