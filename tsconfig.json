@@ -20,11 +20,13 @@
     "noUnusedParameters": true,
     "incremental": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": "src"
-    // "paths": {
-    //   "@components/*": ["/src/components/*"],
-    //   "@routes/*": ["src/routes/*"]
-    // }
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"],
+      "@components/*": ["components/*"],
+      "@routes/*": ["routes/*"],
+      "@lib/*": ["lib/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "build"]
