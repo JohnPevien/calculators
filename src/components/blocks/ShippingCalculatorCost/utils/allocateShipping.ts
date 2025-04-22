@@ -30,7 +30,7 @@ export function allocateShipping(items: Item[], shippingFee: number): AllocatedI
       qty: item.qty,
       share,
       totalWithShipping: Number((baseCost + share).toFixed(2)),
-      ratioPct: Number(((baseCost / totalCost) * 100).toFixed(2)),
+      ratioPct: totalCost > 0 ? Number(((baseCost / totalCost) * 100).toFixed(2)) : 0,
     };
   });
 }
