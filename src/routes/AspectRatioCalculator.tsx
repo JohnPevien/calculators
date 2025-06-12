@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 
 interface Preset {
   label: string;
@@ -23,6 +23,8 @@ const AspectRatioCalculator: React.FC = () => {
   const [pxH, setPxH] = useState<number>(720);
   const [selectedPreset, setSelectedPreset] = useState<string>('HD Video 16:9');
 
+  const ratioWRef = useRef<HTMLInputElement>(null);
+
   const recalcHeight = useCallback(
     (baseWidth: number, w: number = ratioW, h: number = ratioH) => {
       if (!w || !h) return baseWidth;
@@ -42,17 +44,24 @@ const AspectRatioCalculator: React.FC = () => {
   /** When ratio changes -> adjust pixel height */
   useEffect(() => {
     setPxH(recalcHeight(pxW));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ratioW, ratioH]);
 
   const handlePresetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const label = e.target.value;
     setSelectedPreset(label);
     const preset = PRESETS.find(p => p.label === label);
-    if (preset && preset.w && preset.h) {
-      setRatioW(preset.w);
-      setRatioH(preset.h);
+
+    if (!preset) return;
+
+    if (label === 'Custom') {
+      // focus on ratio field when custom is selected
+      ratioWRef.current?.focus();
+      return;
     }
+
+    // For all other presets, apply the preset's width and height.
+    setRatioW(preset.w);
+    setRatioH(preset.h);
   };
 
   const handleRatioWChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,6 +116,7 @@ const AspectRatioCalculator: React.FC = () => {
             className="input input-bordered w-full"
             value={ratioW}
             onChange={handleRatioWChange}
+            ref={ratioWRef}
           />
         </fieldset>
         <fieldset className="fieldset">
