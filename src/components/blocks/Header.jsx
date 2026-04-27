@@ -38,6 +38,9 @@ export default function Header() {
                 <Link to='/shipping-calculator'>Shipping Calculator</Link>
               </li>
               <li>
+                <Link to='/aspect-ratio-calculator'>Aspect Ratio Calculator</Link>
+              </li>
+              <li>
                 <a href=''>About</a>
               </li>
             </ul>
