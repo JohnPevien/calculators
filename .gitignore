@@ -23,3 +23,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# AI tool directories and files
+context/
+.claude/
+.windsurf/
+.windsurfrules
+.clinerules
+CLAUDE.md
+CRUSH.md
+.github/copilot-instructions.md
