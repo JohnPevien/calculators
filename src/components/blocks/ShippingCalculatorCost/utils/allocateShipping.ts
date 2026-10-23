@@ -20,10 +20,28 @@ export function allocateShipping(items: Item[], shippingFee: number): AllocatedI
     return { name: i.name, cost, qty };
   });
   const totalCost = numericItems.reduce((sum, item) => sum + item.cost * item.qty, 0);
-  return numericItems.map(item => {
+  // Largest remainder: floor each share to cents, then give leftover cents to
+  // the largest fractional parts so shares always sum to exactly shippingFee.
+  const feeCents = Math.round(shippingFee * 100);
+  const rawCents = numericItems.map(item =>
+    totalCost > 0 ? ((item.cost * item.qty) / totalCost) * feeCents : 0
+  );
+  const shareCents = rawCents.map(c => Math.floor(c));
+  // No proportional basis when nothing was bought: leave shares at zero.
+  if (totalCost > 0) {
+    let leftover = feeCents - shareCents.reduce((sum, c) => sum + c, 0);
+    const byFractionDesc = rawCents
+      .map((_, i) => i)
+      .sort((a, b) => rawCents[b] - shareCents[b] - (rawCents[a] - shareCents[a]));
+    for (const i of byFractionDesc) {
+      if (leftover <= 0) break;
+      shareCents[i] += 1;
+      leftover -= 1;
+    }
+  }
+  return numericItems.map((item, i) => {
     const baseCost = item.cost * item.qty;
-    const rawShare = totalCost > 0 ? (baseCost / totalCost) * shippingFee : 0;
-    const share = Math.round(rawShare * 100) / 100;
+    const share = shareCents[i] / 100;
     return {
       name: item.name,
       cost: item.cost,
